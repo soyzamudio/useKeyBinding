@@ -29,7 +29,7 @@ function App() {
   const [keys, setKeys] = useState(["cmd", "k"]);
   const [bindingError, setBindingError] = useState("");
   const shortcutDisplay = useRef<HTMLDivElement>(null);
-  const keyLabels: Record<string, string> = { cmd: mac ? "⌘" : "Ctrl", ctrl: "Ctrl", meta: mac ? "⌘" : "Meta", alt: "Alt", shift: "Shift", space: "Space", escape: "Esc", arrowup: "↑", arrowdown: "↓", arrowleft: "←", arrowright: "→" };
+  const keyLabels: Record<string, string> = { cmd: mac ? "⌘" : "Ctrl", ctrl: "Ctrl", meta: mac ? "⌘" : "Meta", alt: mac ? "Option" : "Alt", shift: "Shift", space: "Space", escape: "Esc", arrowup: "↑", arrowdown: "↓", arrowleft: "←", arrowright: "→" };
   const labels = keys.map(key => keyLabels[key] ?? (key.length === 1 ? key.toUpperCase() : key.charAt(0).toUpperCase() + key.slice(1)));
   const shortcutLabel = labels.join(" + ");
   const [open, setOpen] = useState(false);
@@ -41,7 +41,7 @@ function App() {
   const [copyError, setCopyError] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
   const previousFocus = useRef<HTMLElement | null>(null);
-  const bindingCode = `useKeyBinding(${keys.map(key => JSON.stringify(key)).join(", ")}, () => {
+  const bindingCode = `useKeyBinding(${keys.map(key => JSON.stringify(mac && key === "alt" ? "option" : key)).join(", ")}, () => {
     setOpen(true);
   }, { enabled: ${enabled}, allowInInputs: ${allowInInputs} });`;
 
@@ -137,7 +137,7 @@ function App() {
                 </select></label>
                 <label htmlFor="binding-key">Key<input id="binding-key" value={draftKey} onChange={event => { setDraftKey(event.target.value); setBindingError(""); }} aria-invalid={!!bindingError} aria-describedby={bindingError ? "binding-error" : "binding-hint"} autoComplete="off" spellCheck={false} /></label>
               </div>
-              <div className="binding-actions"><div className="extra-modifiers"><label><input type="checkbox" checked={draftShift} onChange={event => setDraftShift(event.target.checked)} />Shift</label><label><input type="checkbox" checked={draftAlt} onChange={event => setDraftAlt(event.target.checked)} />Alt</label></div><button className="apply-binding" type="submit">Apply binding <span aria-hidden="true">↵</span></button></div>
+              <div className="binding-actions"><div className="extra-modifiers"><label><input type="checkbox" checked={draftShift} onChange={event => setDraftShift(event.target.checked)} />Shift</label><label><input type="checkbox" checked={draftAlt} onChange={event => setDraftAlt(event.target.checked)} />{mac ? "Option" : "Alt"}</label></div><button className="apply-binding" type="submit">Apply binding <span aria-hidden="true">↵</span></button></div>
               <p id="binding-hint" className="binding-hint">Try a letter, Enter, Space, or ArrowDown. Include Shift for shifted characters.</p>
               {bindingError && <p className="binding-error" id="binding-error" role="alert">{bindingError}</p>}
             </form>
@@ -154,7 +154,7 @@ function App() {
 
       <section id="getting-started" className="section guide" aria-labelledby="guide-title"><div className="section-heading"><div><div className="eyebrow">02 / GETTING STARTED</div><h2 id="guide-title" tabIndex={-1}>Small API. Short setup.</h2></div><span className="outline-badge">EARLY RELEASE</span></div>
         <div className="guide-grid"><div className="guide-step"><span className="step-number">1</span><h3>Build it locally</h3><p>This project isn’t on npm yet. From a local checkout, build a package, then install the archive in your React app.</p><pre><code>{'npm ci\nnpm pack\n\n# Run from your React app\nnpm install /path/to/use-key-binding-0.1.0.tgz'}</code></pre></div><div className="guide-step"><span className="step-number">2</span><h3>Bind something good</h3><p>Import the hook. Pass your keys, then a callback. Here’s the binding to put inside your component.</p><div className="snippet"><button className="copy-button" onClick={copyCode}>{copied ? "Copied ✓" : "Copy example"}</button><pre><code>{bindingCode}</code></pre></div><p className="copy-feedback" role="status">{copyError ? "Clipboard unavailable. Select and copy the code above." : copied ? "Copied a complete React example. Make it yours." : "Use with React 18+ and an ESM-compatible bundler."}</p></div></div>
-        <div className="api-notes"><div><span aria-hidden="true">⌥</span><h3>Make it your own</h3><p>Add <code>shift</code> or <code>alt</code> to a chord. Use <code>ctrl</code> or <code>meta</code> for literal modifier keys.</p></div><div><span aria-hidden="true">↹</span><h3>Respect the input</h3><p>Inputs are ignored by default. Opt in with <code>{'{ allowInInputs: true }'}</code> when it makes sense.</p></div><div><span aria-hidden="true">↩</span><h3>Leave no listeners behind</h3><p>Automatic cleanup on unmount. Current callbacks. Server rendering support. Just a little less to think about.</p></div></div>
+        <div className="api-notes"><div><span aria-hidden="true">⌥</span><h3>Make it your own</h3><p>Add <code>shift</code> or <code>{mac ? "option" : "alt"}</code> to a chord. Use <code>ctrl</code> or <code>meta</code> for literal modifier keys.</p></div><div><span aria-hidden="true">↹</span><h3>Respect the input</h3><p>Inputs are ignored by default. Opt in with <code>{'{ allowInInputs: true }'}</code> when it makes sense.</p></div><div><span aria-hidden="true">↩</span><h3>Leave no listeners behind</h3><p>Automatic cleanup on unmount. Current callbacks. Server rendering support. Just a little less to think about.</p></div></div>
       </section>
     </main>
     <footer className="wrap"><a className="wordmark" href="#"><span className="brand-icon">⌘</span>useKeyBinding</a><span>Small by design. Open source by choice.</span><span>MIT LICENSE <span className="footer-spark" aria-hidden="true">✳</span></span></footer>

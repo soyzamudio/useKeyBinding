@@ -74,7 +74,7 @@ Use a current Node.js LTS release. Install dependencies with `npm ci`, make your
 
 ## Demo and GitHub Pages
 
-The React demo imports the hook directly from `src` and includes an editable shortcut builder, command menu, live shortcut counter, input protection controls, and a short getting-started guide. Choose a modifier and key, optionally add Shift or Alt, then select **Apply binding** to test it. The displayed and copied code follows the active binding.
+The React demo imports the hook directly from `src` and includes an editable shortcut builder, command menu, live shortcut counter, input protection controls, and a short getting-started guide. Choose a modifier and key, optionally add Shift or Option (Alt on Windows/Linux), then select **Apply binding** to test it. The displayed and copied code follows the active binding.
 
 ```sh
 npm run demo:dev      # Local development
