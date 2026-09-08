@@ -3,3 +3,23 @@
 @media(max-width:900px){.wrap{width:calc(100% - 48px)}h1{font-size:61px;letter-spacing:-3.8px}.hero-art{transform:scale(.85);transform-origin:center}.hero-grid{gap:0;grid-template-columns:1.1fr .9fr}.big-key{width:100px;height:110px}.orbit{width:260px;height:260px}.orbit-two{width:320px;height:200px}.feature-strip{flex-wrap:wrap;gap:18px}.feature-strip>span{width:calc(50% - 18px)}.demo-grid{grid-template-columns:1fr 1fr}.interactive-panel{padding:20px}.code-panel pre{font-size:10px;padding:25px 18px}.demo-controls{gap:15px;flex-wrap:wrap}.guide-grid{gap:24px}.section-heading h2{font-size:30px}.guide-step{padding-left:31px}}
 @media(max-width:640px){.wrap{width:calc(100% - 36px)}.site-header{height:80px}.wordmark{font-size:15px;gap:8px}.version{display:none}.site-header nav{gap:17px;font-size:11px}.site-header nav a:nth-child(2){display:none}.hero{padding-top:39px}.hero-grid{grid-template-columns:1fr}.hero h1{font-size:62px;letter-spacing:-3.7px;margin-top:23px}.hero-description{font-size:15px}.hero-art{height:255px;transform:scale(.86);margin-top:25px}.orbit{width:265px;height:265px}.orbit-two{width:330px;height:210px}.top-label{left:10px;top:4px}.bottom-label{right:10px;bottom:2px}.art-spark{right:15px;top:0}.feature-strip{margin-top:25px;font-size:10px;gap:17px 10px}.feature-strip b{margin-right:6px}.feature-strip>span{width:calc(50% - 5px)}.section{padding-top:47px}.section-heading{align-items:start}.section-heading h2{font-size:28px}.section-heading>p{display:none}.demo-grid,.guide-grid{grid-template-columns:1fr}.interactive-panel{padding:23px}.code-panel pre{font-size:11px;padding:25px 20px}.code-note{margin-top:0}.demo-controls{gap:22px}.guide-grid{gap:26px}.guide-step pre{font-size:10px}.outline-badge{font-size:8px;padding:6px;margin-top:0;white-space:nowrap}.guide .section-heading{gap:8px}.guide .section-heading h2{font-size:25px}.guide-step{padding-left:32px}.api-notes{grid-template-columns:1fr;gap:28px;margin-top:26px}.api-notes>div{padding-left:36px;position:relative}.api-notes>div>span{position:absolute;left:0;top:-4px}footer{flex-wrap:wrap;gap:19px}footer>span:nth-child(2){order:3;width:100%}.dialog-footer{font-size:8px}.hero-actions{gap:20px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important}}
+
+/* Editable shortcut playground */
+.binding-editor{margin-top:23px;padding-bottom:18px;border-bottom:1px solid #cdd3c3}
+.binding-fields{display:grid;grid-template-columns:1.2fr 1fr;gap:12px}
+.binding-fields label{display:flex;flex-direction:column;gap:7px;font-size:11px;color:#535e47;min-width:0}
+.binding-fields input,.binding-fields select{width:100%;min-width:0;border:1px solid #c4ccb8;border-radius:5px;background:#f8faf3;padding:10px;font:12px var(--mono);color:#36412d}
+.binding-fields input[aria-invalid=true]{border-color:#b43c20}
+.binding-actions{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:13px}
+.extra-modifiers{display:flex;gap:16px}.extra-modifiers label{display:flex;align-items:center;gap:5px;font-size:11px;cursor:pointer}.extra-modifiers input{accent-color:#677c53}
+.apply-binding{background:#526541;color:white;border:0;border-radius:5px;padding:10px 12px;font-size:11px;display:flex;gap:12px;align-items:center}.apply-binding:hover{background:#3e5130}
+.binding-hint{font-size:10px;color:#666f5d;line-height:1.65;margin:12px 0 0}
+.binding-error{font-size:11px;line-height:1.6;color:#a3351c;margin:10px 0 0}
+.shortcut-display{flex-wrap:wrap;gap:10px;padding-top:26px;outline-offset:7px;border-radius:6px}
+.shortcut-part{display:flex;align-items:center;gap:10px;min-width:0;max-width:100%}
+.shortcut-plus{font-size:16px;color:#707c64}
+.shortcut-display kbd{font-size:clamp(17px,2.2vw,30px);min-width:55px;height:65px;padding-inline:10px;overflow-wrap:anywhere}
+.code-panel pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:2}
+@media(max-width:640px){.shortcut-display kbd{font-size:23px;height:59px}.binding-fields{grid-template-columns:1.15fr 1fr}.extra-modifiers{gap:10px}}
+
+.shortcut-display kbd{color:#38422f}.shortcut-display:focus{outline:2px solid var(--orange)}
