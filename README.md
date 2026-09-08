@@ -68,13 +68,19 @@ Composition/IME events, AltGraph, and events already prevented by another handle
 
 Shortcuts work while the page has focus and the browser delivers the event. OS-reserved shortcuts and some browser shortcuts cannot be intercepted. Keep a visible button or menu action for keyboard shortcuts, and take care with single-letter shortcuts and assistive technology. The example above illustrates the hook; it is not a complete accessible dialog.
 
+For example, bind Command+Option+Shift+K by physical position so an Option-generated symbol does not prevent a match:
+
+```tsx
+useKeyBinding("cmd", "option", "shift", "KeyK", callback, { useCode: true });
+```
+
 ## Contributing
 
 Use a current Node.js LTS release. Install dependencies with `npm ci`, make your change, then run `npm test`, `npm run typecheck`, and `npm run build`. Include a regression test for behavior changes. Tests simulate each platform; native browser/OS testing is still useful before a release.
 
 ## Demo and GitHub Pages
 
-The React demo imports the hook directly from `src` and includes an editable shortcut builder, command menu, live shortcut counter, input protection controls, and a short getting-started guide. Choose a modifier and key, optionally add Shift or Option (Alt on Windows/Linux), then select **Apply binding** to test it. The displayed and copied code follows the active binding.
+The React demo imports the hook directly from `src` and includes an editable shortcut builder, command menu, live shortcut counter, input protection controls, and a short getting-started guide. Choose a modifier and key, optionally add Shift or Option (Alt on Windows/Linux), then select **Apply binding** to test it. The displayed and copied code follows the active binding. For Option/Alt shortcuts using A–Z or 0–9, the playground uses physical codes (`KeyK`, `Digit2`, etc.) with `useCode: true`, because Option can change the character reported by the browser. These codes identify US-layout key positions; other keyboard layouts may label those positions differently. Named keys and explicitly entered symbols still use character matching.
 
 ```sh
 npm run demo:dev      # Local development

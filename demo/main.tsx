@@ -1,6 +1,7 @@
 import { StrictMode, useEffect, useRef, useState, type FormEvent } from "react";
 import { createRoot } from "react-dom/client";
 import { useKeyBinding } from "../src/index.js";
+import { getDemoBinding } from "./binding.js";
 import "./style.css";
 
 const createExample = (binding: string) => `import { useState, type FormEvent } from "react";
@@ -41,9 +42,10 @@ function App() {
   const [copyError, setCopyError] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
   const previousFocus = useRef<HTMLElement | null>(null);
-  const bindingCode = `useKeyBinding(${keys.map(key => JSON.stringify(mac && key === "alt" ? "option" : key)).join(", ")}, () => {
+  const binding = getDemoBinding(keys);
+  const bindingCode = `useKeyBinding(${binding.keys.map(key => JSON.stringify(mac && key === "alt" ? "option" : key)).join(", ")}, () => {
     setOpen(true);
-  }, { enabled: ${enabled}, allowInInputs: ${allowInInputs} });`;
+  }, { enabled: ${enabled}, allowInInputs: ${allowInInputs}${binding.useCode ? ", useCode: true" : ""} });`;
 
   function applyBinding(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -75,7 +77,7 @@ function App() {
     } else setStatus("Command menu opened with a click.");
   }
 
-  useKeyBinding(...keys, () => openMenu(true), { enabled: enabled && !open, allowInInputs });
+  useKeyBinding(...binding.keys, () => openMenu(true), { enabled: enabled && !open, allowInInputs, useCode: binding.useCode });
   useKeyBinding("esc", () => setOpen(false), { enabled: open, allowInInputs: true });
 
   useEffect(() => {
@@ -148,7 +150,7 @@ function App() {
             <div className="demo-controls"><label className="switch-label"><input type="checkbox" checked={enabled} onChange={event => setEnabled(event.target.checked)} /><span className="switch" />Enable shortcut</label><label className="switch-label"><input type="checkbox" checked={allowInInputs} onChange={event => setAllowInInputs(event.target.checked)} /><span className="switch" />Allow in inputs</label></div>
             <label className="typing-label" htmlFor="typing-test">Typing stays yours. Try the shortcut in this field.</label><input id="typing-test" className="typing-input" placeholder="Type something here…" autoComplete="off" />
           </div>
-          <div className="code-panel"><div className="code-toolbar"><span><span className="file-icon">⌑</span> App.tsx</span><span>REACT</span></div><pre aria-label="Demo implementation"><code><span className="syntax-purple">import</span>{' { useKeyBinding } '}<span className="syntax-purple">from</span>{' '}<span className="syntax-green">{'"use-key-binding"'}</span>{';\n\n'}<span className="syntax-comment">{'// Your active binding\n'}</span><span className="syntax-green">{bindingCode}</span>{'\n\n'}<span className="syntax-comment">{'// Escape closes the demo menu.'}</span></code></pre><div className="code-note"><span aria-hidden="true">↳</span><p>{keys.includes("cmd") ? <><code>cmd</code> becomes Command on Mac<br />and Ctrl on Windows & Linux.</> : <>This binding uses literal keys.<br />Add Cmd / Ctrl for automatic platform mapping.</>}</p></div><div className="platform-chips"><span>{shortcutLabel}</span><span>LIVE EXAMPLE</span></div></div>
+          <div className="code-panel"><div className="code-toolbar"><span><span className="file-icon">⌑</span> App.tsx</span><span>REACT</span></div><pre aria-label="Demo implementation"><code><span className="syntax-purple">import</span>{' { useKeyBinding } '}<span className="syntax-purple">from</span>{' '}<span className="syntax-green">{'"use-key-binding"'}</span>{';\n\n'}<span className="syntax-comment">{'// Your active binding\n'}</span><span className="syntax-green">{bindingCode}</span>{'\n\n'}<span className="syntax-comment">{'// Escape closes the demo menu.'}</span></code></pre><div className="code-note"><span aria-hidden="true">↳</span><p>{binding.useCode ? <>{mac ? "Option" : "Alt"} can change the typed character.<br />This chord uses <code>{binding.keys[binding.keys.length - 1]}</code>, a physical key position.</> : keys.includes("cmd") ? <><code>cmd</code> becomes Command on Mac<br />and Ctrl on Windows & Linux.</> : <>This binding uses literal keys.<br />Add Cmd / Ctrl for automatic platform mapping.</>}</p></div><div className="platform-chips"><span>{shortcutLabel}</span><span>LIVE EXAMPLE</span></div></div>
         </div><p className="small-note">Keep this page focused. Some shortcuts are reserved by your browser or operating system. The button works on touch screens, too.</p>
       </section>
 
