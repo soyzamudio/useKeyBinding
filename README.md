@@ -23,11 +23,17 @@ export function CommandMenu() {
 
 `cmd` means **Command on Mac** and **Ctrl on Windows/Linux**. `mod` and `command` are aliases. Use `meta` for the literal Command/Windows key, and `ctrl` for literal Control on every platform.
 
-## Status and local installation
+## Installation
 
-This is an initial implementation; it has not been published to npm. `use-key-binding` is a provisional package name whose registry availability has not been checked.
+```sh
+npm install use-key-binding
+```
 
-Requires React 18 or later and an ESM-compatible bundler. To build a local package:
+Requires React 18 or later and an ESM-compatible bundler.
+
+### Local installation
+
+To build and install from a checkout:
 
 ```sh
 npm install
@@ -78,19 +84,17 @@ useKeyBinding("cmd", "option", "shift", "KeyK", callback, { useCode: true });
 
 Use a current Node.js LTS release. Install dependencies with `npm ci`, make your change, then run `npm test`, `npm run typecheck`, and `npm run build`. Include a regression test for behavior changes. Tests simulate each platform; native browser/OS testing is still useful before a release.
 
-## Demo and GitHub Pages
+### Publishing
 
-The React demo imports the hook directly from `src` and includes an editable shortcut builder, command menu, live shortcut counter, input protection controls, and a short getting-started guide. Choose a modifier and key, optionally add Shift or Option (Alt on Windows/Linux), then select **Apply binding** to test it. The displayed and copied code follows the active binding. For Option/Alt shortcuts using A–Z or 0–9, the playground uses physical codes (`KeyK`, `Digit2`, etc.) with `useCode: true`, because Option can change the character reported by the browser. These codes identify US-layout key positions; other keyboard layouts may label those positions differently. Named keys and explicitly entered symbols still use character matching.
+From a clean checkout with dependencies installed:
 
 ```sh
-npm run demo:dev      # Local development
-npm run demo:build    # Static site in demo-dist/
-npm run demo:preview  # Preview the production build
+npm login --registry=https://registry.npmjs.org/
+npm publish --dry-run
+npm publish
 ```
 
-To publish the demo, push this project to a GitHub repository with a `main` branch. In **Settings → Pages → Build and deployment → Source**, select **GitHub Actions**. Run the **Deploy demo to GitHub Pages** workflow from the Actions tab, or push another commit to `main`. If your default branch has a different name, update the workflow trigger first.
-
-The workflow runs tests and type checks, builds the library and demo with Node.js 24, then deploys `demo-dist`. Relative asset URLs support both repository Pages sites and custom domains. See [GitHub’s custom workflow documentation](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
+Publishing runs tests and type checking, then builds the package. Only `dist`, the README, the license, and package metadata are included. Complete any npm authentication prompts. For later releases, update the version before publishing; npm versions cannot be reused.
 
 ## License
 
