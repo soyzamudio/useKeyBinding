@@ -1,6 +1,6 @@
 {
   "name": "use-key-binding",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A small, typed React hook for cross-platform keyboard shortcuts.",
   "type": "module",
   "license": "MIT",
